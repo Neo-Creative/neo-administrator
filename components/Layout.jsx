@@ -9,7 +9,7 @@ const poppins = Poppins({
 
 export default function Layout({children}) {
   const { data: session } = useSession()
-  if(session) {
+  if(!session) {
     return (
     <main className={`min-h-screen max-h-screen bg-gray-300 flex ${poppins.className}`}>
       <Nav/>
