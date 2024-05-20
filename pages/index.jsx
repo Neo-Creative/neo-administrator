@@ -86,6 +86,11 @@ export default function Home({ finishedOrders }) {
               </div>
             </div>
           </div>
+          <div className='px-3 py-1 text-center mt-10'>
+            <Link href="https://drive.google.com/drive/folders/12tN7pk9W0oWW2VsBRc2GYwuJ5CBb2TBC?usp=drive_link" className='px-3 py-1 bg-slate-800 text-slate-100 rounded shadow-lg mt-10'>
+              UPLOAD IMAGES
+            </Link>
+          </div>
         </div>
     </Layout>
     )

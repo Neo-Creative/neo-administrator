@@ -31,7 +31,7 @@ export default function Products() {
           </thead>
           <tbody>
             {products.map(product => (
-              <tr  key={index} className={product.stock < 11? "bg-red-500" : ""}>
+              <tr  key={product._id} className={product.stock < 11? "bg-red-500" : ""}>
                 <td>{product.title}</td>
                 <td>{product.stock}</td>
                 <td className='text-center flex justify-center items-center gap-5'>
