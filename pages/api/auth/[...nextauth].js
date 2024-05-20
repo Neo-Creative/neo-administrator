@@ -1,19 +1,17 @@
-// next-auth.config.js
-
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import { getServerSession } from 'next-auth';
-import NextAuth from 'next-auth';
+import NextAuth, { getServerSession } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
 
 // Define a list of admin email addresses
 const adminEmails = ['tharuuxofc@gmail.com', 'info@neo.lk'];
 
-const authOptions = {
-  // Use the value of SECRET from environment variables
+// Define NextAuth options
+export const authOptions = {
+  // Use the SECRET environment variable as the secret key
   secret: process.env.SECRET,
-  // Define authentication providers
   providers: [
+    // Configure Google OAuth provider
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET
@@ -21,21 +19,22 @@ const authOptions = {
   ],
   // Use MongoDBAdapter for session storage
   adapter: MongoDBAdapter(clientPromise),
-  // Callback to check if the user is an admin
+  // Define session callback to check if user is an admin
   callbacks: {
-    session: async ({ session, token, user }) => {
-      // If user is in the admin list, allow access
+    session: ({ session, token, user }) => {
+      // Check if the user's email is in the adminEmails array
       if (adminEmails.includes(session?.user?.email)) {
+        // Allow access if user is an admin
         return session;
       } else {
-        // Otherwise, disallow access
+        // Deny access if user is not an admin
         return false;
       }
     },
   },
 };
 
-// Export NextAuth instance with configured options
+// Initialize NextAuth with the configured options
 export default NextAuth(authOptions);
 
 // Function to check if a request is from an admin user
@@ -44,7 +43,8 @@ export async function isAdminRequest(req, res) {
   const session = await getServerSession(req, res, authOptions);
   // If session is not found or user is not admin, respond with 401 Unauthorized
   if (!session?.user || !adminEmails.includes(session.user.email)) {
-    res.status(401).end();
-    throw new Error('Unauthorized');
+    res.status(401);
+    res.end();
+    throw 'Unauthorized';
   }
 }
