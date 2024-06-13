@@ -34,7 +34,7 @@ export default function Finished() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="border border-gray-300 rounded-md px-3 py-1 mb-3"
           />
-          <Link href={'/Orders/finished/'} className='px-3 py-1 btn cursor-pointer flex justify-center items-center bg-slate-200 rounded shadow-md hover:bg-slate-300 hover:shadow-lg'>Finished Orders</Link>
+          <Link href={'/orders'} className='px-3 py-1 btn cursor-pointer flex justify-center items-center bg-slate-200 rounded shadow-md hover:bg-slate-300 hover:shadow-lg'>Unfinished Orders</Link>
           </div>
           <table className="basic shadow-lg">
             <thead>
